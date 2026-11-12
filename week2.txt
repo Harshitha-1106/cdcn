@@ -1,0 +1,105 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+
+"int"|"float"|"char"|"if"|"else"|"while"|"for"|"return" {
+    printf("%s -> KEYWORD\n", yytext);
+}
+
+[a-zA-Z_][a-zA-Z0-9_]* {
+    printf("%s -> IDENTIFIER\n", yytext);
+}
+
+[0-9]+ {
+    printf("%s -> NUMBER\n", yytext);
+}
+
+"+"|"-"|"*"|"/"|"=" {
+    printf("%s -> OPERATOR\n", yytext);
+}
+
+"("|")"|"{"|"}"|";"|"," {
+    printf("%s -> SYMBOL\n", yytext);
+}
+
+"//".* {
+    /* Ignore comments */
+}
+
+[ \t\n]+ {
+    /* Ignore whitespace */
+}
+
+. {
+    printf("%s -> UNKNOWN\n", yytext);
+}
+
+%%
+
+int main()
+{
+    printf("Enter the input:\n");
+    yylex();
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}
+
+
+STEPS :
+
+UBUNTU INSTALLATION : 
+Steps to execute the program
+1. Open PowerShell as Administrator
+- Search for PowerShell in Windows.
+- Right-click and select Run as administrator.
+2. Install WSL and Ubuntu
+wsl --install -d Ubuntu
+
+
+Restart your laptop if Windows asks you to.
+3. Open Ubuntu
+- Search for Ubuntu in the Start menu and open it.
+- Create a username and password if prompted.
+- Nothing appears while typing your password. This is normal.
+4. Update Ubuntu
+sudo apt update
+
+
+2. Execution steps in Ubuntu
+Step 1: Install required packages
+sudo apt update
+sudo apt install bison flex gcc -y
+
+
+Step 2: Create a folder
+mkdir -p compiler
+cd compiler
+
+3. Execute these commands
+Step 1: Generate Lex analyzer
+flex lexer.l
+
+
+Step 2: Compile
+gcc lex.yy.c -o lexer -lfl
+
+
+Step 3: Run
+./lexer
+
+
+4. Test your program
+Enter:
+int main()
+{
+    int a = 10;
+    float b = 20;
+    a = a + b;
+    return 0;
+}
